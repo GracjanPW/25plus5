@@ -15,7 +15,7 @@
   display: flex;
 
 
-  margin: 1rem 2rem;
+  margin: 1rem;
 }
 .adjust-ctn {
   display: flex;
@@ -24,12 +24,12 @@
   width: max-content;
 }
 .study-ctn {
-  margin: 1rem 2rem;
+  margin: 1rem;
   padding: 1rem 3rem;
 
 }
 .rest-ctn {
-  margin: 1rem 2rem;
+  margin: 1rem;
   padding: 1rem 3rem;
   
 }
@@ -39,4 +39,23 @@
   flex-direction: column;
   background: chartreuse;
   border-radius: 5px;
+}
+.ctn-h {
+  font-size: 1.5rem;
+}
+.ctn-n {
+  font-size: 3rem;
+}
+.btn {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 1rem 0rem;
+  font-size: 1rem;
+}
+.start-btn {
+  background: green;
+}
+.stop-btn {
+  background: red;
 }

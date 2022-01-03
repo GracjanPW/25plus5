@@ -76,28 +76,28 @@ const App = () =>{
   return (
     <div className='window'>
         <div className='ctn timer-ctn'>
-          <div>{status?'study':'rest'}</div>
-          <div>{timeFormat(timer)}</div>
+          <div className='ctn-h'>{status?'Study':'Rest'}</div>
+          <div className='ctn-n'>{timeFormat(timer)}</div>
           <div>
-            <button onClick={()=>togglePause(state=>!state)}>{pause?'start':'stop'}</button>
-            <button onClick={reset}>reset</button>
+            <button className={'btn' +' '+(pause?'start-btn':'stop-btn')} onClick={()=>togglePause(state=>!state)}>{pause?'start':'stop'}</button>
+            <button className='btn stop-btn' onClick={reset}>reset</button>
           </div>
         </div>
         <div className='adjust-ctn'>
           <div className='ctn rest-ctn'>
-            <div>Rest Time</div>
-            <div>{rest}</div>
+            <div className='ctn-h'>Rest Time</div>
+            <div className='ctn-n'>{rest}</div>
             <div>
-              <button onClick={()=>incr(setRest)}>/\</button>
-              <button onClick={()=>decr(setRest)}>\/</button>
+              <button className='btn start-btn' onClick={()=>incr(setRest)}>/\</button>
+              <button className='btn stop-btn' onClick={()=>decr(setRest)}>\/</button>
           </div>
           </div>
           <div className='ctn study-ctn'>
-            <div>Study Time</div>
-            <div>{study}</div>
+            <div className='ctn-h'>Study Time</div>
+            <div className='ctn-n'>{study}</div>
             <div>
-              <button onClick={()=>incr(setStudy)}>/\</button>
-              <button onClick={()=>decr(setStudy)}>\/</button>
+              <button className='btn start-btn' onClick={()=>incr(setStudy)}>/\</button>
+              <button className='btn stop-btn' onClick={()=>decr(setStudy)}>\/</button>
           </div>
           </div>
         </div>
