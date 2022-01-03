@@ -1,25 +1,109 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import useSound from 'use-sound'
+import beep from './snd/beep.mp3'
 import './App.css';
 
-function App() {
+
+const App = () =>{
+  const [study, setStudy] = useState(25)
+  const [rest, setRest] = useState(5)
+  const [timer,setTimer] = useState(study*60)
+  const [pause, togglePause] = useState(true)
+  const [status,setStatus] = useState(true) // true: session false: break
+  const [autoStart, setAutoStart] = useState(true)
+  const [play] = useSound(beep,{ volume: 1 })
+
+  const reset = () =>{
+    togglePause(true)
+    setTimer(study*60)
+    setStatus(true)
+  }
+  
+  const incr = (func) =>{
+    func(i=> {
+      if (i<60){
+        return i+1
+      }
+      return i
+    })
+  }
+  const decr = (func)=>{
+    func(i=> {
+      if (i>0){
+        return i-1
+      }
+      return i
+    })
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if(!pause) {
+        if (timer > 0) {
+          setTimer(time => time-1);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval)
+    }
+      
+  });
+  useEffect(() => {
+    if (timer === 0) {
+      setStatus(cur=> cur === false)
+      play()
+      if (!autoStart){
+        togglePause(true)
+      }
+    }
+    return;
+  }, [timer])
+  
+  useEffect(() => {
+      setTimer((status?study:rest)*60)
+      return;
+  }, [status])
+
+
+  const timeFormat = (seconds) => {
+    const m = Math.floor(seconds / 60)
+    const s = seconds - (m*60)
+
+    return `${m<10?'0'+m:m}:${s<10?'0'+s:s}`
+
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='window'>
+        <div className='ctn timer-ctn'>
+          <div>{status?'study':'rest'}</div>
+          <div>{timeFormat(timer)}</div>
+          <div>
+            <button onClick={()=>togglePause(state=>!state)}>{pause?'start':'stop'}</button>
+            <button onClick={reset}>reset</button>
+          </div>
+        </div>
+        <div className='adjust-ctn'>
+          <div className='ctn rest-ctn'>
+            <div>Rest Time</div>
+            <div>{rest}</div>
+            <div>
+              <button onClick={()=>incr(setRest)}>/\</button>
+              <button onClick={()=>decr(setRest)}>\/</button>
+          </div>
+          </div>
+          <div className='ctn study-ctn'>
+            <div>Study Time</div>
+            <div>{study}</div>
+            <div>
+              <button onClick={()=>incr(setStudy)}>/\</button>
+              <button onClick={()=>decr(setStudy)}>\/</button>
+          </div>
+          </div>
+        </div>
     </div>
-  );
+    
+  )
 }
 
 export default App;
